@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#100d20">
+<title>The Graph of Us — A Little Confession</title>
+<style>
+:root{--bg:#100d20;--panel:#1a1630;--panel2:#211b3c;--ink:#f8f4ff;--muted:#b9b0d0;--pink:#ff78b7;--violet:#a995ff;--line:#ffffff20;--good:#83e6bd}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#38244f 0,transparent 42%),radial-gradient(ellipse at 100% 70%,#251b48 0,transparent 38%),var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+main{width:min(960px,92vw);margin:auto;padding:38px 0 70px}.eyebrow{text-transform:uppercase;letter-spacing:.22em;font-size:.72rem;color:var(--pink);font-weight:800}.hero{text-align:center;padding:42px 16px 34px}.hero h1{font-family:Georgia,serif;font-size:clamp(2.7rem,8vw,5.6rem);line-height:1.02;margin:14px 0;background:linear-gradient(110deg,#fff 15%,#ffc0df 55%,#b8a9ff);color:transparent;background-clip:text}.hero p{max-width:600px;margin:0 auto;color:var(--muted);line-height:1.7}.spark{color:var(--pink)}.panel{background:linear-gradient(145deg,#211b3ceF,#171329f2);border:1px solid var(--line);border-radius:26px;padding:clamp(20px,4vw,34px);box-shadow:0 24px 70px #0005;backdrop-filter:blur(12px)}.intro{text-align:center}.intro h2,.challenge h2{font-family:Georgia,serif;font-weight:500;font-size:clamp(1.7rem,4vw,2.5rem);margin:8px 0 12px}.intro p,.challenge p{color:var(--muted);line-height:1.7}.btn{border:0;border-radius:999px;padding:13px 23px;background:linear-gradient(100deg,var(--pink),#b59aff);color:#1a1027;font-weight:800;font-size:.96rem;cursor:pointer;box-shadow:0 8px 25px #e77ab944;transition:transform .2s,filter .2s}.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}.btn:focus-visible,.option:focus-visible{outline:3px solid white;outline-offset:3px}.challenge{display:none}.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--muted);font-size:.85rem}.progress{height:6px;background:#ffffff16;border-radius:99px;margin:15px 0 24px;overflow:hidden}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--violet));transition:width .4s}.prompt{font-size:1.02rem!important;color:#eee8ff!important}.options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:20px}.option{border:1px solid var(--line);border-radius:18px;background:#ffffff08;color:var(--ink);padding:12px;cursor:pointer;text-align:left;transition:.2s}.option:hover{border-color:#ff9bc7;background:#ffffff12;transform:translateY(-2px)}.option:disabled{cursor:default;opacity:.65}.option canvas{display:block;width:100%;height:150px;background:#100d20;border-radius:12px;margin-bottom:10px}.option strong{display:block;font-size:.9rem}.option small{display:block;color:var(--muted);margin-top:3px}.feedback{min-height:30px;margin:18px 0 4px;color:var(--good);font-weight:700}.reveal{display:none;text-align:center;margin-top:22px}.big-reveal{font-size:clamp(4rem,17vw,9rem);letter-spacing:.08em;line-height:1.15;margin:18px 0;background:linear-gradient(90deg,#ff91c5,#fff,#b9a7ff);color:transparent;background-clip:text;filter:drop-shadow(0 0 25px #ff83c966)}.letter{display:inline-block;animation:pop .7s both}.letter:nth-child(2){animation-delay:.2s}.letter:nth-child(3){animation-delay:.4s}@keyframes pop{from{opacity:0;transform:translateY(24px) scale(.7)}to{opacity:1;transform:translateY(0) scale(1)}}.note{max-width:640px;margin:0 auto;color:#e9e0f7;line-height:1.9}.signature{font-family:Georgia,serif;font-style:italic;color:#ffacd0;font-size:1.3rem;margin-top:24px}.footer{text-align:center;color:#82799e;font-size:.75rem;margin-top:30px}.hide{display:none!important}
+@media(max-width:560px){main{padding-top:12px}.hero{padding:38px 8px 25px}.options{gap:9px}.option{padding:8px}.option canvas{height:118px}.option strong{font-size:.82rem}.option small{font-size:.72rem}.panel{border-radius:20px}}
+</style>
+</head>
+<body>
+<main>
+  <header class="hero">
+    <div class="eyebrow">A little experiment in mathematics</div>
+    <h1>The Graph<br>of Us</h1>
+    <p>Some things are easier to express with equations. Some are not. But I thought I’d try both.</p>
+  </header>
+  <section class="panel intro" id="intro">
+    <div class="eyebrow">For Lynette <span class="spark">✦</span></div>
+    <h2>Would you solve a few little mysteries?</h2>
+    <p>Five tiny graph challenges. No pressure, no grades—just follow the curves and see where they lead.</p>
+    <button class="btn" id="start">Let's begin ↗</button>
+  </section>
+  <section class="panel challenge" id="game" aria-live="polite">
+    <div class="topline"><span id="roundLabel">CHALLENGE 1 OF 5</span><span id="scoreLabel">0 solved</span></div>
+    <div class="progress"><span id="progress"></span></div>
+    <div class="eyebrow" id="topic">Coordinate geometry</div>
+    <h2 id="question">Which graph belongs here?</h2>
+    <p class="prompt" id="prompt"></p>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback" role="status"></div>
+    <button class="btn hide" id="next">Next curve →</button>
+  </section>
+  <section class="panel reveal" id="ending">
+    <div class="eyebrow">The solution was never just mathematics</div>
+    <h2>After all those curves…</h2>
+    <div class="big-reveal"><span class="letter">I</span><span class="letter"> ♥ </span><span class="letter">U</span></div>
+    <p class="note">I’m not an Engineer, Physicist, nor Chemist,<br>but I made this little confession the best way I could.<br><br>In mathematics, two points can define a line.<br>In physics, every action has a reaction.<br>In chemistry, the right elements can form a bond.<br><br>And somehow, among all the possible outcomes,<br>my favorite is getting to know you.</p>
+    <p class="signature">— Someone who hopes this made you smile</p>
+    <button class="btn" id="again">Replay the little experiment ↻</button>
+  </section>
+  <div class="footer">Made with a little math, a little courage, and a lot of heart. ♡</div>
+</main>
+<script>
+const rounds=[
+ {topic:"Coordinate geometry · 01",title:"A line with a little meaning",prompt:"Find the graph that draws a simple vertical line through the center. Think of it as the first letter of a message.",answer:0,choices:[["x = 0","A vertical line"],["y = x","A diagonal line"],["y = x²","A parabola"],["x² + y² = 4","A circle"]],shapes:["vertical","diagonal","parabola","circle"]},
+ {topic:"A little algebra · 02",title:"A curve with a soft spot",prompt:"Which equation creates the familiar heart-shaped curve? A little implicit equation, a very direct message.",answer:2,choices:[["x² + y² = 1","A unit circle"],["y = |x|","A V-shaped graph"],["(x² + y² − 1)³ = x²y³","A heart curve"],["y = x³","A cubic curve"]],shapes:["circle","v","heart","cubic"]},
+ {topic:"Functions · 03",title:"A curve that stays open",prompt:"Choose the graph shaped like a U. It turns upward, like a smile that keeps going.",answer:1,choices:[["y = −x²","An upside-down parabola"],["y = x²","An upward parabola"],["y = 1/x","A reciprocal curve"],["y = sin(x)","A wave"]],shapes:["downparabola","parabola","reciprocal","sine"]},
+ {topic:"Physics · 04",title:"Every action…",prompt:"A projectile's ideal path (without air resistance) is a parabola. Which graph shows that familiar arc?",answer:3,choices:[["A straight line","Constant rate"],["A circle","Closed path"],["A sine wave","Periodic motion"],["A downward parabola","Projectile trajectory"]],shapes:["line","circle","sine","downparabola"]},
+ {topic:"Chemistry · 05",title:"A bond between elements",prompt:"A simple first-order decay follows an exponential curve. Which graph decreases smoothly as time passes?",answer:0,choices:[["y = e⁻ˣ","Exponential decay"],["y = x²","Quadratic growth"],["y = x","Linear growth"],["y = sin(x)","Oscillation"]],shapes:["decay","parabola","line","sine"]}
+];
+let current=0,solved=0,locked=false;
+const $=id=>document.getElementById(id);
+function draw(canvas,shape){
+ const c=canvas.getContext("2d");
+ canvas.width=600; canvas.height=300;
+ const W=600,H=300,ox=W/2,oy=H/2,scale=Math.min(W,H)*.34;
+ c.clearRect(0,0,W,H);
+ c.strokeStyle="rgba(255,255,255,.22)";c.lineWidth=1.5;
+ c.beginPath();c.moveTo(12,oy);c.lineTo(W-12,oy);c.moveTo(ox,12);c.lineTo(ox,H-12);c.stroke();
+ c.fillStyle="rgba(255,255,255,.35)";
+ for(let i=-3;i<=3;i++){if(!i)continue;c.beginPath();c.arc(ox+i*scale/1.5,oy,2,0,Math.PI*2);c.fill();c.beginPath();c.arc(ox,oy-i*scale/1.5,2,0,Math.PI*2);c.fill();}
+ c.strokeStyle="#ff8cbe";c.lineWidth=4;c.lineCap="round";c.lineJoin="round";
+ const X=x=>ox+x*scale,Y=y=>oy-y*scale;
+ function plot(f,a,b){c.beginPath();let first=true;for(let x=a;x<=b;x+=.01){let y=f(x);if(!Number.isFinite(y)||Math.abs(y)>4){first=true;continue;}if(first){c.moveTo(X(x),Y(y));first=false;}else c.lineTo(X(x),Y(y));}c.stroke();}
+ if(shape==="vertical"){c.beginPath();c.moveTo(ox,15);c.lineTo(ox,H-15);c.stroke();}
+ else if(shape==="diagonal"||shape==="line"){c.beginPath();c.moveTo(X(-1.5),Y(-1.5));c.lineTo(X(1.5),Y(1.5));c.stroke();}
+ else if(shape==="parabola")plot(x=>x*x,-1.45,1.45);
+ else if(shape==="downparabola")plot(x=>-x*x,-1.45,1.45);
+ else if(shape==="circle"){c.beginPath();c.arc(ox,oy,scale,0,Math.PI*2);c.stroke();}
+ else if(shape==="v"){c.beginPath();c.moveTo(X(-1.2),Y(1.2));c.lineTo(ox,oy);c.lineTo(X(1.2),Y(1.2));c.stroke();}
+ else if(shape==="heart"){c.beginPath();let first=true;for(let t=0;t<=Math.PI*2+.02;t+=.02){let x=16*Math.pow(Math.sin(t),3)/18,y=(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))/18;let px=X(x),py=Y(y);if(first){c.moveTo(px,py);first=false;}else c.lineTo(px,py);}c.closePath();c.stroke();}
+ else if(shape==="cubic")plot(x=>x*x*x,-1.3,1.3);
+ else if(shape==="reciprocal"){plot(x=>1/x,-1.5,-.12);plot(x=>1/x,.12,1.5);}
+ else if(shape==="sine")plot(x=>Math.sin(x*2.4),-1.5,1.5);
+ else if(shape==="decay")plot(x=>Math.exp(-x*1.7)*1.2-.2,-.2,1.5);
+}
+function render(){locked=false;$("roundLabel").textContent=`CHALLENGE ${current+1} OF ${rounds.length}`;$("scoreLabel").textContent=`${solved} solved`;$("progress").style.width=`${current/rounds.length*100}%`;let r=rounds[current];$("topic").textContent=r.topic;$("question").textContent=r.title;$("prompt").textContent=r.prompt;$("feedback").textContent="";$("next").classList.add("hide");$("options").innerHTML="";
+ r.choices.forEach((choice,i)=>{let b=document.createElement("button");b.className="option";b.innerHTML=`<canvas aria-hidden="true"></canvas><strong>${String.fromCharCode(65+i)} · ${choice[0]}</strong><small>${choice[1]}</small>`;b.addEventListener("click",()=>choose(i,b));$("options").appendChild(b);draw(b.querySelector("canvas"),r.shapes[i])});
+}
+function choose(i,button){if(locked)return;locked=true;const r=rounds[current];document.querySelectorAll(".option").forEach(b=>b.disabled=true);if(i===r.answer){solved++;button.style.borderColor="#83e6bd";button.style.background="#83e6bd18";$("feedback").textContent="That's the one. Nicely done. ✨"}else{$("feedback").textContent="Not quite—but every curve deserves a second look. The right answer is highlighted.";let correct=$("options").children[r.answer];correct.style.borderColor="#83e6bd";correct.style.background="#83e6bd18"}$("scoreLabel").textContent=`${solved} solved`;$("next").textContent=current===rounds.length-1?"See where it leads ♡":"Next curve →";$("next").classList.remove("hide")}
+$("start").addEventListener("click",()=>{$("intro").style.display="none";$("game").style.display="block";render()});
+$("next").addEventListener("click",()=>{current++;if(current>=rounds.length){$("game").style.display="none";$("ending").style.display="block";$("progress").style.width="100%"}else render()});
+$("again").addEventListener("click",()=>{current=0;solved=0;$("ending").style.display="none";$("game").style.display="block";render()});
+</script>
+</body>
+</html>
